@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#C4785A">
+<meta name="description" content="原生家庭健康度测试。18 道原创题，看你成长期的家庭互动氛围画像。娱乐向自我观察，非正式心理测量或家庭评估。">
+<meta property="og:title" content="原生家庭健康度测试 · 你的原生家庭对你影响有多大">
+<meta property="og:description" content="六维画像 · 健康指数 · 六档锐评 · 雷达。娱乐向自我观察，不是对父母的审判。">
+<meta property="og:url" content="https://zengpenghui420-glitch.github.io/family-of-origin/">
+<link rel="canonical" href="https://zengpenghui420-glitch.github.io/family-of-origin/">
+<title>原生家庭健康度测试 · 你的原生家庭对你影响有多大</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C4785A'/%3E%3Cpath d='M6 15 L16 7 L26 15 V25 H6Z' fill='none' stroke='%23F3E8DC' stroke-width='2' stroke-linejoin='round'/%3E%3Crect x='13.5' y='18' width='5' height='7' rx='1' fill='%238B7E9A'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#F7F3EE;--card:#FFFCFA;--ink:#2C2622;--muted:#7A716A;--faint:#8C827A;
+  --ink-deep:#2C2622;--clay:#C4785A;--clay-deep:#9A5A42;--mist:#8B7E9A;--mist-deep:#6E627C;
+  --cream:#F3E8DC;--line:#E5D9CE;--panel:#E8E2EA;
+  --sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px)
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:#E8DFD6;color-scheme:light}
+body{
+  max-width:430px;margin:0 auto;min-height:100dvh;color:var(--ink);line-height:1.6;
+  font-family:"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Noto Sans SC","WenQuanYi Micro Hei","Droid Sans Fallback","Microsoft YaHei",sans-serif;
+  background:
+    radial-gradient(circle at 12% -4%, rgba(196,120,90,.30), transparent 42%),
+    radial-gradient(circle at 96% 6%, rgba(139,126,154,.22), transparent 40%),
+    linear-gradient(180deg,#FFFCFA,#F7F3EE 48%,#F3E8DC);
+  overflow-x:hidden
+}
+body.lock{overflow:hidden}
+button,input{font-family:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{outline:2px solid var(--clay);outline-offset:2px}
+[hidden]{display:none !important}
+.screen{display:none}
+.screen.active{display:block}
+#start.active,#quiz.active,#loading.active{display:flex;flex-direction:column;min-height:100dvh}
+#loading.active{align-items:center;justify-content:center;text-align:center;padding:24px}
+#start{padding:calc(22px + var(--st)) 22px calc(22px + var(--sb));text-align:center}
+.mark{width:120px;height:120px;margin:8px auto 10px}
+.mark svg{width:100%;height:auto;display:block}
+.eyebrow{font-size:12px;letter-spacing:3px;color:var(--clay-deep);font-weight:600;margin-bottom:8px}
+h1{font-size:26px;line-height:1.35;font-weight:700;letter-spacing:.5px;margin-bottom:8px;color:var(--ink-deep)}
+.sub{font-size:16px;color:#5C4E46;margin-bottom:8px}
+.warm{font-size:13px;color:var(--muted);margin-bottom:14px}
+.dim-intro{list-style:none;text-align:left;display:flex;flex-direction:column;gap:8px;margin:0 0 16px}
+.dim-intro li{display:flex;gap:10px;align-items:center;background:rgba(255,252,250,.94);border:1px solid var(--line);border-radius:16px;padding:8px 12px}
+.dim-intro i{flex:0 0 28px;width:28px;height:28px;border-radius:9px;background:rgba(196,120,90,.20);color:var(--clay-deep);font-style:normal;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.dim-intro b{display:block;font-size:14px;line-height:1.3}
+.dim-intro span{display:block;font-size:12px;color:var(--muted);line-height:1.45}
+.pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
+.pill{padding:5px 10px;border-radius:999px;background:rgba(255,252,250,.94);border:1px solid var(--line);color:#5C4E46;font-size:12px}
+.btn-primary{width:100%;padding:15px 16px;border:none;border-radius:28px;background:linear-gradient(180deg,#C4785A,#9A5A42);color:#FFF8F4;font-size:17px;font-weight:700;box-shadow:0 8px 18px rgba(154,90,66,.28)}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{opacity:.65}
+.btn-ghost{width:100%;margin-top:10px;padding:13px 16px;border-radius:28px;border:1.5px solid #D9CBBF;background:rgba(255,252,250,.94);color:#5C4E46;font-size:15px;font-weight:600}
+.btn-ghost:active{transform:scale(.98)}
+.hint{margin-top:14px;font-size:12px;color:var(--faint);line-height:1.6}
+.disclaimer{margin-top:16px;padding:12px 12px 12px 14px;background:var(--cream);border:1px solid #E4D3C4;border-left:4px solid var(--clay);border-radius:14px;color:var(--ink);font-size:13px;line-height:1.7;text-align:left}
+.disclaimer strong{font-weight:700}
+.safety{margin:4px 0 12px;padding:12px 12px 12px 14px;background:#F3F0F5;border:1px solid #DDD6E4;border-left:4px solid var(--mist);border-radius:14px;color:var(--ink);font-size:13px;line-height:1.7}
+.safety strong{font-weight:700}
+.qh{padding:14px 18px 12px;background:rgba(247,243,238,.94);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5;backdrop-filter:blur(8px)}
+.qrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.qback{background:none;border:none;color:var(--muted);font-size:14px;padding:4px 0}
+.qprog{font-size:13px;color:var(--clay-deep);font-weight:700}
+.track{height:6px;background:#E5D9CE;border-radius:3px;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#8B7E9A,#C4785A);border-radius:3px;transition:width .3s}
+.qbody{padding:22px 20px 28px}
+.qno{font-size:12px;letter-spacing:2px;color:var(--clay-deep);font-weight:700;margin-bottom:8px}
+.qprompt{font-size:12.5px;color:var(--muted);line-height:1.65;margin:-2px 0 12px}
+.qtext{font-size:20px;font-weight:700;line-height:1.5;margin-bottom:18px;color:var(--ink-deep)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 14px;background:rgba(255,252,250,.96);border:1.5px solid var(--line);border-radius:16px;color:var(--ink);font-size:15px;box-shadow:0 3px 0 rgba(229,217,206,.9)}
+.opt .onum{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:rgba(196,120,90,.20);color:var(--clay-deep);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.opt.sel,.opt:active{border-color:var(--clay);background:rgba(196,120,90,.14);color:var(--ink-deep)}
+.opt.sel .onum{background:var(--clay-deep);color:#FFF8F4}
+.loader{width:40px;height:40px;border:3px solid #E5D9CE;border-top-color:var(--clay-deep);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 16px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.load-title{font-weight:700;color:var(--ink-deep)}
+.load-sub{margin-top:6px;font-size:13px;color:var(--faint)}
+#result{padding-bottom:calc(196px + var(--sb))}
+.rtop{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(247,243,238,.94);border-bottom:1px solid var(--line);font-size:14px;font-weight:700;backdrop-filter:blur(8px)}
+.rtop span:last-child{font-weight:500;color:#5C4E46;font-size:13px}
+.result-body{padding:16px 16px 8px}
+.card{position:relative;background:linear-gradient(180deg,rgba(255,252,250,.98),rgba(247,243,238,.94));border:1px solid var(--line);border-radius:22px;padding:18px 16px 16px;margin-bottom:12px;box-shadow:0 10px 24px rgba(44,38,34,.05)}
+.kicker{font-size:12px;letter-spacing:4px;color:var(--clay-deep);font-weight:700}
+.index-num{font-size:56px;line-height:.95;font-weight:700;color:var(--ink-deep);letter-spacing:-1px;margin:4px 0 2px}
+.index-max{font-size:12px;color:var(--faint);margin-bottom:10px}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap}
+.lv{display:inline-block;padding:4px 10px;border-radius:999px;background:rgba(196,120,90,.20);color:var(--clay-deep);font-size:13px;font-weight:700}
+.lv.mist{background:rgba(139,126,154,.18);color:var(--mist-deep)}
+.lead{margin-top:14px;font-size:12px;letter-spacing:2px;color:#5C4E46;font-weight:700}
+.type-title{font-size:26px;line-height:1.3;margin:4px 0 6px;color:var(--ink-deep)}
+.punch{font-size:15px;line-height:1.7;color:#3F342E}
+.egg{margin-top:10px;padding:8px 10px;border-radius:12px;background:rgba(139,126,154,.14);color:var(--mist-deep);font-size:13px;line-height:1.55}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.tag{padding:4px 10px;border-radius:999px;background:rgba(196,120,90,.16);color:var(--clay-deep);font-size:12px;font-weight:600}
+.tag.mist{background:rgba(139,126,154,.16);color:var(--mist-deep)}
+.note{margin-top:10px;font-size:13px;color:#5C4E46;line-height:1.65}
+.st{font-size:16px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
+.st:before{content:"";display:inline-block;width:7px;height:7px;margin-right:8px;border-radius:2px;background:var(--clay);transform:translateY(-1px) rotate(45deg)}
+.fine{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.65}
+.radar-box svg{width:100%;height:auto;display:block}
+.bar{margin-top:12px}
+.bar-h{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;font-weight:700}
+.bar-h b{color:var(--clay-deep);font-size:16px}
+.bar-track{height:8px;background:#E5D9CE;border-radius:99px;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;width:0;background:linear-gradient(90deg,#8B7E9A,#C4785A);border-radius:99px}
+.bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
+.bullets li{position:relative;padding-left:14px;font-size:14.5px;line-height:1.7;color:var(--ink-deep)}
+.bullets li:before{content:"";position:absolute;left:0;top:.72em;width:6px;height:6px;border-radius:50%;background:var(--clay-deep)}
+.score-grid{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.dim-read{padding:12px 0;border-top:1px solid var(--line)}
+.dim-read:first-of-type{border-top:none;padding-top:0}
+.dim-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dn{font-size:14px;font-weight:700}
+.ds{font-size:18px;font-weight:700;color:#5C4E46}
+.dim-read p{margin-top:4px;font-size:13.5px;color:var(--muted);line-height:1.7}
+.thin-name{font-size:22px;line-height:1.3;margin:2px 0 6px;color:var(--ink-deep)}
+#result .disclaimer{margin:4px 0 12px}
+#result .safety{margin:4px 0 12px}
+.acts{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;padding:8px 12px calc(10px + var(--sb));background:rgba(255,252,250,.97);border-top:1px solid var(--line);z-index:20;display:flex;flex-direction:column;gap:6px}
+.acts-note{font-size:11px;color:var(--muted);text-align:center;line-height:1.45}
+.acts-row{display:flex;gap:8px}
+.acts-row button{flex:1;padding:11px 4px;border-radius:22px;font-size:13px;font-weight:700}
+.bo{border:1.5px solid #D9CBBF;background:#fff;color:#5C4E46}
+.bp{border:none;background:linear-gradient(180deg,#C4785A,#9A5A42);color:#FFF8F4}
+.ov{position:fixed;inset:0;background:rgba(44,38,34,.82);z-index:200;display:none;flex-direction:column;align-items:center;padding:16px 16px calc(16px + var(--sb));overflow-y:auto}
+.ov.show{display:flex}
+.ov img{width:min(100%,400px);border-radius:16px;background:#F7F3EE}
+.ovh{color:#FFF8F4;font-size:14px;margin:8px 0 12px}
+.ovb{display:flex;gap:10px;width:100%;max-width:400px;margin-top:12px}
+.ovb button{flex:1;padding:12px;border:none;border-radius:22px;font-size:15px;font-weight:700}
+.ovb .save{background:#fff;color:var(--ink)}
+.ovb .shut{background:rgba(255,252,250,.16);color:#FFF8F4}
+.toast{position:fixed;bottom:calc(210px + var(--sb));left:50%;transform:translateX(-50%);background:rgba(44,38,34,.92);color:#FFF8F4;padding:10px 16px;border-radius:20px;font-size:13px;z-index:300;opacity:0;transition:opacity .3s;pointer-events:none;max-width:88%;text-align:center}
+.toast.show{opacity:1}
+.code-mask{position:fixed;inset:0;background:rgba(44,38,34,.48);z-index:150;display:none;align-items:center;justify-content:center;padding:20px}
+.code-mask.show{display:flex}
+.code-panel-wrap{position:relative;width:100%;max-width:340px}
+.code-panel{background:#FFFCFA;border:1.5px solid var(--line);border-radius:22px;padding:24px 18px 18px;box-shadow:0 16px 40px rgba(44,38,34,.2);text-align:center}
+.code-panel h3{font-size:18px;margin-bottom:14px;color:var(--ink-deep)}
+.code-panel input{width:100%;padding:14px 12px;border:1.5px solid var(--line);border-radius:14px;font-size:18px;letter-spacing:2px;text-align:center;color:var(--ink);background:#F7F3EE;outline:none}
+.code-panel input:focus{border-color:var(--clay);background:#fff}
+.code-panel .btn-primary{margin-top:12px}
+.code-hint{margin-top:12px;font-size:12px;color:var(--faint);line-height:1.6}
+.code-close{position:absolute;top:8px;right:12px;background:none;border:none;font-size:22px;color:var(--faint);line-height:1;padding:4px}
+@media (prefers-reduced-motion:reduce){.fill,.toast,.bar-fill{transition:none}.loader{animation:none}}
+</style>
+</head>
+<body>
+<section id="start" class="screen active">
+  <div class="mark" aria-hidden="true">
+    <svg viewBox="0 0 120 120">
+      <defs>
+        <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#D4927A"/>
+          <stop offset="100%" stop-color="#C4785A"/>
+        </linearGradient>
+      </defs>
+      <rect x="8" y="8" width="104" height="104" rx="28" fill="#F3E8DC"/>
+      <rect x="8" y="8" width="104" height="104" rx="28" fill="none" stroke="#E5D9CE" stroke-width="2"/>
+      <path d="M28 62 L60 36 L92 62 V88 H28Z" fill="url(#g1)"/>
+      <path d="M28 62 L60 36 L92 62" fill="none" stroke="#9A5A42" stroke-width="3" stroke-linejoin="round"/>
+      <rect x="50" y="66" width="16" height="22" rx="2" fill="#F7F3EE"/>
+      <rect x="74" y="68" width="10" height="10" rx="2" fill="#F3E8DC"/>
+      <circle cx="86" cy="38" r="6.5" fill="#8B7E9A"/>
+    </svg>
+  </div>
+  <p class="eyebrow">娱乐向 · 自我观察</p>
+  <h1>原生家庭健康度测试</h1>
+  <p class="sub">你的原生家庭对你影响有多大</p>
+  <p class="warm">锐利但温柔 · 看的是成长期家里的互动氛围，不是对父母的审判，也不是诊断</p>
+  <ul class="dim-intro">
+    <li><i>E</i><div><b>情感接住</b><span>难过时有没有人接住你</span></div></li>
+    <li><i>B</i><div><b>边界呼吸</b><span>隐私与自主有没有空间</span></div></li>
+    <li><i>C</i><div><b>沟通通道</b><span>家里能不能说真话</span></div></li>
+    <li><i>R</i><div><b>角色轻负</b><span>有没有被迫当小大人</span></div></li>
+    <li><i>W</i><div><b>价值温度</b><span>爱是否绑成绩与听话</span></div></li>
+    <li><i>S</i><div><b>安全底盘</b><span>家是否给人稳定依靠</span></div></li>
+  </ul>
+  <div class="pills"><span class="pill">18 道题</span><span class="pill">六维雷达</span><span class="pill">健康指数 0–100</span></div>
+  <button class="btn-primary" id="btnStart" type="button">开始测试</button>
+  <button class="btn-ghost" id="btnLast" type="button" hidden>查看上次结果</button>
+  <p class="hint">请按成长期家里更常见的样子来选 · 第一反应即可 · 仅娱乐向自我观察</p>
+  <p class="disclaimer" id="startDisclaimer"></p>
+</section>
+
+<section id="quiz" class="screen">
+  <div class="qh">
+    <div class="qrow"><button class="qback" id="qback" type="button">← 返回</button><span class="qprog" id="qprog"></span></div>
+    <div class="track"><div class="fill" id="fill"></div></div>
+  </div>
+  <div class="qbody">
+    <div class="qno" id="qno"></div>
+    <p class="qprompt" id="qprompt"></p>
+    <div class="qtext" id="qtext"></div>
+    <div class="opts" id="opts"></div>
+  </div>
+</section>
+
+<section id="loading" class="screen">
+  <div class="loader"></div>
+  <div class="load-title">正在整理家庭画像…</div>
+  <div class="load-sub">六维底盘对齐中</div>
+</section>
+
+<section id="result" class="screen">
+  <div class="rtop"><span>原生家庭健康度测试</span><span id="resultMeta"></span></div>
+  <div class="result-body" id="resultBody"></div>
+  <div class="acts">
+    <p class="acts-note">娱乐向自我观察 · 非正式家庭评估 · 重新测试会再扣 1 次</p>
+    <div class="acts-row">
+      <button class="bo" id="btnViewLast" type="button">查看上次</button>
+      <button class="bo" id="btnCopy" type="button">复制文案</button>
+      <button class="bp" id="btnImg" type="button">生成卡片</button>
+    </div>
+    <div class="acts-row">
+      <button class="bp" id="btnRetry" type="button">重新测试</button>
+    </div>
+  </div>
+</section>
+
+<div class="code-mask" id="codeMask" aria-hidden="true">
+  <div class="code-panel-wrap">
+    <button class="code-close" id="codeClose" type="button" aria-label="关闭">×</button>
+    <div class="code-panel">
+      <h3>输入验证码</h3>
+      <input id="codeInput" type="text" inputmode="text" autocomplete="off" autocapitalize="characters" maxlength="8" placeholder="FOXXXX" aria-label="验证码">
+      <button class="btn-primary" id="btnCodeOk" type="button">开始答题</button>
+      <p class="code-hint">每码可测 3 次。重新测试会再扣 1 次；查看上次结果不扣次。</p>
+    </div>
+  </div>
+</div>
+
+<div class="ov" id="ov" aria-hidden="true">
+  <p class="ovh">长按图片保存，或点下方下载</p>
+  <img id="shareImg" alt="分享卡片">
+  <div class="ovb">
+    <button class="save" id="btnDl" type="button">下载图片</button>
+    <button class="shut" id="btnClose" type="button">关闭</button>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="padding:24px;text-align:center">请开启 JavaScript 后使用本测验。</p></noscript>
+<script>
+const API_BASE='https://snappy-tundra-7uesdvk.tmp.now';
+const QUIZ_KEY='family';
+const ACCESS_KEY='family_unlocked';
+const ACCESS_CODE_KEY='family_code';
+const LAST_KEY='family_last_result';
+const CODE_RE=/^FO[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{4}$/i;
+const URL_='https://zengpenghui420-glitch.github.io/family-of-origin/';
+const DISCLAIMER='本测试为娱乐向自我观察，非正式心理测量或家庭评估，不能替代专业心理咨询、心理治疗或临床诊断。「原生家庭健康指数」只是对你童年/成长期家庭互动氛围的趣味画像，不是对父母的审判，也不等于你现在过得好不好；结果会受回忆偏差与当下情绪影响。若题目勾起强烈不适，请随时停下，优先照顾自己。';
+const SAFETY_NOTE='看见来处是为了更温和地走向自己，不是为了给谁定罪。家庭没有标准答案。若相关体验已明显影响睡眠、工作或关系，寻求现实支持（可信赖的人、正规心理咨询/医院心理科）是勇敢的选择，而不是软弱。';
+const PROMPT_TEXT='请按你成长期（大约小学到高中）家里更常见的样子来选，第一反应即可。没有标准答案。';
+const INDEX_NOTE='指数偏高不等于家庭完美，偏低也不等于人生完蛋。看见模式，是为了给现在的自己留一点选择空间。';
+const FONT='"PingFang SC","Hiragino Sans GB","Noto Sans CJK SC","Noto Sans SC","WenQuanYi Micro Hei","Droid Sans Fallback","Microsoft YaHei",sans-serif';
+const CHOICES=[{v:1,t:'完全不像我'},{v:2,t:'不太像'},{v:3,t:'说不清'},{v:4,t:'有点像'},{v:5,t:'非常像我'}];
+const DIM_IDS=['E','B','C','R','W','S'];
+const DIM_META={
+  E:{name:'情感接住', tip:'难过时有没有人接住你', high:'情绪被看见、被安慰', low:'报喜不报忧；难受常被忽略'},
+  B:{name:'边界呼吸', tip:'隐私与自主有没有空间', high:'尊重选择与私人领域', low:'过度干涉或冷漠疏离'},
+  C:{name:'沟通通道', tip:'家里能不能说真话', high:'能商量、能听进不同意见', low:'指责/冷战/沉默高压'},
+  R:{name:'角色轻负', tip:'有没有被迫当小大人', high:'年龄相称的责任', low:'过早照顾大人情绪/家务主导'},
+  W:{name:'价值温度', tip:'爱是否绑成绩与听话', high:'无条件被接纳的底感', low:'价值感靠表现换来'},
+  S:{name:'安全底盘', tip:'家是否给人稳定依靠', high:'脆弱时有人可依', low:'氛围飘、随时可能炸'}
+};
+
+const QS=[
+  {id:'E1', dim:'E', text:'你难过或受委屈时，家里通常会有人问一句「怎么了」，而不是直接说「想开点」。'},
+  {id:'E2', dim:'E', text:'你愿意把真正害怕的事告诉家人，而不只报喜不报忧。'},
+  {id:'E3', dim:'E', rev:true, text:'你哭或发脾气时，家里更容易觉得你「矫情」「事多」，而不是先接住情绪。'},
+  {id:'B1', dim:'B', text:'你的房间、日记、手机或社交账号，家人大体尊重，不会动不动翻查。'},
+  {id:'B2', dim:'B', text:'选学校、朋友或爱好时，家人会给意见，但最终还留你一点自主空间。'},
+  {id:'B3', dim:'B', rev:true, text:'家里常把「为你好」当成通行证，对你的私人选择插手很深。'},
+  {id:'C1', dim:'C', text:'家里发生分歧时，多数还能坐下来把话说清楚，而不是一路吵到砸门或冷战。'},
+  {id:'C2', dim:'C', text:'你表达不同意见时，家人至少愿意听完，不一定立刻压回去。'},
+  {id:'C3', dim:'C', rev:true, text:'家里一有矛盾就变成指责、翻旧账或长时间不说话，真话很难出口。'},
+  {id:'R1', dim:'R', text:'小时候你大体只需做好自己的事，不用长期当父母的情绪安抚员。'},
+  {id:'R2', dim:'R', text:'父母闹别扭时，你不觉得必须由你去圆场、求和、稳住全场。'},
+  {id:'R3', dim:'R', rev:true, text:'很小的时候你就被夸「懂事」「像个小大人」，其实是被迫扛了超出年龄的责任。'},
+  {id:'W1', dim:'W', text:'就算成绩一般、表现平平，你仍感觉家人爱的是你这个人，而不只是结果。'},
+  {id:'W2', dim:'W', text:'你搞砸一件事时，家里更常一起想办法，而不是先把你贬得一文不值。'},
+  {id:'W3', dim:'W', rev:true, text:'你习惯用「够不够优秀」来换安心：好像不够好就不配被爱。'},
+  {id:'S1', dim:'S', text:'脆弱或生病时，你知道家里至少有一个人可以依靠。'},
+  {id:'S2', dim:'S', text:'在家你大体觉得「这里相对安全」，不会总提心吊胆等下一场爆发。'},
+  {id:'S3', dim:'S', rev:true, text:'家里气氛说变就变，你从小练就了察言观色、随时紧绷的本事。'}
+];
+
+const TIERS=[
+  {id:'THIN', min:0, max:16, name:'薄冰底盘 · 来处紧绷', punch:'家给你的安全感偏薄，很多习惯像是「先活下来」练出来的',
+    tags:['先活下来','警报灵敏','底盘偏薄'],
+    note:'那些紧绷曾经帮你把日子撑过来。现在的你可以慢慢辨认：哪些是旧警报，哪些是此刻真的需要你。',
+    traits:[
+      '情绪被接住的经验偏少，难受时更习惯自己咽回去，或只报平安。',
+      '边界和真话的出口都比较窄，家里一紧，你就先把自己缩小。',
+      '你很早学会察言观色，像随时准备接住大人的情绪。',
+      '价值感容易和「够不够好、够不够懂事」绑在一起。',
+      '这些是旧的生存策略，不是你这个人的缺陷。'
+    ],
+    advice:[
+      '今天先记下一次「身体先紧了」的瞬间，只命名，不分析对错。',
+      '找一个相对安全的人，用一句话试着说出真实感受。',
+      '给自己留一个小边界：有一件事可以今晚先不立刻回应。',
+      '若回忆让你很难受，停下来喝口水、离开屏幕，也算一次照顾。'
+    ]},
+  {id:'DRAFT', min:17, max:33, name:'穿堂风里 · 模式在身', punch:'情绪与边界常被吹乱，你还在用旧剧本应付新关系',
+    tags:['旧剧本','风还在吹','边界在练'],
+    note:'旧剧本曾经帮你把关系应付过去。现在的你可以练习在风里停三秒，再决定要不要按老台词接话。',
+    traits:[
+      '家里有过一点温度，也常被一阵风吹乱，情绪落点不太稳。',
+      '边界说得含糊：有时被插手，有时又忽然没人接住。',
+      '沟通容易滑向指责、沉默或「算了」，真话停在半路。',
+      '到了新关系里，你仍会自动出演熟悉角色：圆场、讨好或先紧绷。',
+      '模式在身上，并不等于你注定重复同一出戏。'
+    ],
+    advice:[
+      '下一次想立刻接话时，心里默数三秒再回应。',
+      '准备一句小边界：「这件事我想自己决定，意见我听到了。」',
+      '把「我现在需要一点空」练到能说出口，哪怕先只对自己说。',
+      '看见旧剧本启动时，只标记「这是来处的风」，不必马上改掉全部。'
+    ]},
+  {id:'MIXED', min:34, max:49, name:'冷暖交织 · 有光有影', punch:'家里有过接住，也有过缺口；你身上同时带着两套说明书',
+    tags:['有光有影','两套说明书','不必单选'],
+    note:'光和影可以同时属实。现在的你不必选边站队，也不必把整段成长收成一个结论。',
+    traits:[
+      '有人问过「怎么了」，也有过被说矫情、或直接略过的时候。',
+      '有些选择被尊重，有些「为你好」仍然伸得很深。',
+      '你既能感到家的暖，也能准确指出缺口在哪里。',
+      '两套说明书会在不同关系里轮流上线，让你时而敞开、时而防备。',
+      '并存本身就是真实的，不必急着只认其中一面。'
+    ],
+    advice:[
+      '写下家里一件温暖的小事，和一件仍会刺一下的事，允许它们并列。',
+      '遇到熟悉触发时，先问自己：这是现在的人，还是旧缺口被碰到了。',
+      '对亲近的人说清：「我需要被听完，不一定要被马上解决。」',
+      '先看见模式就够用，不必急着把原因收成某一个人的错。'
+    ]},
+  {id:'ROOT', min:50, max:66, name:'根系半稳 · 能站也能晃', punch:'底盘大体能撑，遇到熟悉触发仍会晃一下',
+    tags:['大体能撑','熟悉会晃','根系在长'],
+    note:'能站已经是底气。现在的你不必推翻全部来处，只要在会晃的场景里，多给自己一根临时的杖。',
+    traits:[
+      '多数时候家里能商量、也能依靠，整体底盘撑得住。',
+      '遇到成绩、听话或气氛突变这类旧触发，仍会晃一下。',
+      '情感与边界大体被尊重，偶发的插手或冷场还留着印。',
+      '你已经能分辨「这是家里的习惯」和「这是我现在的选择」。',
+      '半稳不是失败，是根系还在长。'
+    ],
+    advice:[
+      '挑一个最容易晃的场景，提前写下一句给自己的话。',
+      '晃的时候先做一件身体小事：脚踩实、喝水、到窗边站一会儿。',
+      '不必为了「看起来更健康」否定家里曾经给过的支撑。',
+      '把一次晃动记成观察，而不是对自己的判决。'
+    ]},
+  {id:'HEARTH', min:67, max:83, name:'炉火常在 · 靠得住的家感', punch:'情感与边界多数时候被尊重，你更敢做自己',
+    tags:['家感靠得住','敢做自己','把稳传出去'],
+    note:'家感大体靠得住。现在的课题多半是把这份稳带进自己的关系，也记得先照顾正在生活的你。',
+    traits:[
+      '难过时多半有人接，你也比较敢把害怕说出来。',
+      '私人空间和选择大体被留着，分歧还能坐下来谈。',
+      '你较少被迫当小大人，价值感不只靠成绩和听话去换。',
+      '脆弱时知道有处可依，日常不需要总绷着。',
+      '你更敢做自己，也开始想怎么把这份稳传给身边的人。'
+    ],
+    advice:[
+      '把一句你受益过的接住方式，用在今天的某段关系里。',
+      '为自己留一个不被「懂事」占满的晚上。',
+      '若偶尔仍不舒服，允许它存在，不必用「我家挺好」盖住。',
+      '把稳定当成可以分享的温度，而不是要求别人也必须一样。'
+    ]},
+  {id:'HARBOR', min:84, max:100, name:'港湾底色 · 来处温柔', punch:'家更像可停靠的岸；你的课题多半是「如何把这份稳传下去」',
+    tags:['可停靠','来处温柔','允许不同'],
+    note:'来处温柔是一份礼物。现在的你也可以允许自己偶尔不适，并允许别人的来处和你不一样。',
+    traits:[
+      '情感、边界、沟通和依靠大多时候是稳的，家更像可以停靠的岸。',
+      '你较少用表现去换爱，也较少被迫提前长大。',
+      '气氛大体可预期，你不必把察言观色练成每天的功课。',
+      '你容易以为「大家都这样」，从而忽略别人更薄的底盘。',
+      '稳可以传下去，但不必变成唯一正确的家。'
+    ],
+    advice:[
+      '把一份你收到过的温柔，具体地传给一个你在乎的人。',
+      '允许自己说出偶尔的不适，不必用「我家很好」把感觉压回去。',
+      '听别人讲来处时先接住，不急着对照「我家不是这样」。',
+      '继续照顾自己的睡眠、节奏和边界，稳也需要日常维护。'
+    ]}
+];
+
+let ans=[], qi=0, picking=false, codeBusy=false, current=null, order=[];
+
+function $(id){return document.getElementById(id)}
+function el(tag, cls, text){
+  const n=document.createElement(tag);
+  if(cls) n.className=cls;
+  if(text!=null) n.textContent=text;
+  return n;
+}
+function esc(s){return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='start') refreshStartBtn();
+}
+function toast(msg){
+  const t=$('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toast._tm);
+  toast._tm=setTimeout(()=>t.classList.remove('show'),2200);
+}
+function itemScore(q,v){return q.rev?6-v:v}
+function to100(mean){return Math.round(Math.max(0,Math.min(100,((mean-1)/4)*100)))}
+function shuffle(arr){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    const t=a[i];a[i]=a[j];a[j]=t;
+  }
+  return a;
+}
+function scoreFromAnswers(list){
+  const buckets={E:[],B:[],C:[],R:[],W:[],S:[]};
+  list.forEach((v,i)=>{
+    const q=QS[order[i]];
+    buckets[q.dim].push(itemScore(q,v));
+  });
+  const scores={};
+  DIM_IDS.forEach(id=>{
+    const arr=buckets[id];
+    const mean=arr.reduce((s,x)=>s+x,0)/arr.length;
+    scores[id]=to100(mean);
+  });
+  return scores;
+}
+function healthOf(scores){
+  const mean=DIM_IDS.reduce((s,id)=>s+scores[id],0)/DIM_IDS.length;
+  return Math.round(Math.max(0, Math.min(100, mean)));
+}
+function tierOf(index){
+  const n=Math.max(0,Math.min(100,index));
+  for(const t of TIERS){
+    if(n>=t.min && n<=t.max) return t;
+  }
+  return TIERS[TIERS.length-1];
+}
+function thinnestOf(scores){
+  let best=DIM_IDS[0], bestScore=scores[DIM_IDS[0]];
+  for(let i=1;i<DIM_IDS.length;i++){
+    const id=DIM_IDS[i];
+    if(scores[id]<bestScore){best=id;bestScore=scores[id]}
+  }
+  return best;
+}
+function dimRead(id,score){
+  if(score>=67) return DIM_META[id].high;
+  if(score<=33) return DIM_META[id].low;
+  return DIM_META[id].tip;
+}
+function analyze(scores){
+  const index=healthOf(scores);
+  const tier=tierOf(index);
+  const thin=thinnestOf(scores);
+  return {
+    scores,
+    index,
+    tierId:tier.id,
+    name:tier.name,
+    punch:tier.punch,
+    traits:tier.traits,
+    advice:tier.advice,
+    tags:tier.tags||[],
+    note:tier.note||'',
+    dominant:thin,
+    dominantName:DIM_META[thin].name,
+    thinLine:dimRead(thin, scores[thin])
+  };
+}
+function fillMarked(node, text, marks){
+  node.textContent='';
+  const re=new RegExp('('+marks.map(m=>m.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')');
+  text.split(re).forEach(part=>{
+    if(marks.indexOf(part)>=0) node.appendChild(el('strong',null,part));
+    else if(part) node.appendChild(document.createTextNode(part));
+  });
+}
+function fillDisclaimer(node){
+  fillMarked(node, DISCLAIMER, ['非正式心理测量或家庭评估','不能替代专业心理咨询、心理治疗或临床诊断','不是对父母的审判']);
+}
+function fillSafety(node){
+  fillMarked(node, SAFETY_NOTE, ['看见来处是为了更温和地走向自己，不是为了给谁定罪。','家庭没有标准答案。']);
+}
+function radarSVG(r){
+  const dims=DIM_IDS.map(id=>({name:DIM_META[id].name, score:r.scores[id]}));
+  const cx=220, cy=236, R=86, n=dims.length;
+  const pt=(i,v)=>{
+    const a=-Math.PI/2+(i*2*Math.PI)/n;
+    const rr=Math.max(0,Math.min(100,v))/100*R;
+    return [cx+rr*Math.cos(a), cy+rr*Math.sin(a)];
+  };
+  let rings='', axes='', nums='';
+  [25,50,75,100].forEach(k=>{
+    const pts=[];
+    for(let i=0;i<n;i++) pts.push(pt(i,k).map(v=>v.toFixed(1)).join(','));
+    const strong=k===50||k===100;
+    rings+='<polygon points="'+pts.join(' ')+'" fill="'+(k===100?'rgba(196,120,90,0.08)':'none')+'" stroke="'+(strong?'#D4C4B8':'#E5D9CE')+'" stroke-width="'+(strong?'1.6':'1')+'"/>';
+    const wedge=-Math.PI/3;
+    const sx=cx+(k/100)*R*Math.cos(wedge);
+    const sy=cy+(k/100)*R*Math.sin(wedge);
+    nums+='<text x="'+sx.toFixed(1)+'" y="'+sy.toFixed(1)+'" text-anchor="middle" dominant-baseline="middle" font-size="10" fill="#8C827A">'+k+'</text>';
+  });
+  for(let i=0;i<n;i++){
+    const p=pt(i,100);
+    axes+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="#E5D9CE" stroke-width="1"/>';
+  }
+  const poly=dims.map((d,i)=>pt(i,d.score).map(v=>v.toFixed(1)).join(',')).join(' ');
+  const dots=dims.map((d,i)=>{
+    const p=pt(i,d.score);
+    return '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.2" fill="#F7F3EE" stroke="#C4785A" stroke-width="2"/>';
+  }).join('');
+  let labels='';
+  const halo=' stroke="#F7F3EE" stroke-width="4" paint-order="stroke"';
+  dims.forEach((d,i)=>{
+    const a=-Math.PI/2+(i*2*Math.PI)/n;
+    const lr=R+46;
+    const x=cx+lr*Math.cos(a);
+    const y=cy+lr*Math.sin(a);
+    const anchor=Math.abs(Math.cos(a))<0.35?'middle':(Math.cos(a)>0?'start':'end');
+    labels+='<text x="'+x.toFixed(1)+'" y="'+(y-8).toFixed(1)+'" text-anchor="'+anchor+'" font-size="13" fill="#2C2622"'+halo+'>'+esc(d.name)+'</text>';
+    labels+='<text x="'+x.toFixed(1)+'" y="'+(y+10).toFixed(1)+'" text-anchor="'+anchor+'" font-size="15" font-weight="700" fill="#9A5A42"'+halo+'>'+d.score+'</text>';
+  });
+  const aria='六维雷达图，刻度 0 到 100。高分表示这一侧更稳。'+dims.map(d=>d.name+' '+d.score).join('，');
+  return '<svg viewBox="0 0 440 480" role="img" aria-label="'+esc(aria)+'">'+
+    rings+axes+
+    '<polygon points="'+poly+'" fill="rgba(196,120,90,0.34)" stroke="#9A5A42" stroke-width="2.4" stroke-linejoin="round"/>'+
+    dots+nums+labels+'</svg>';
+}
+function renderResult(r){
+  current=r;
+  const root=$('resultBody');
+  root.textContent='';
+  $('resultMeta').textContent=r.name.split('·')[0].trim()+' · '+r.index;
+
+  const hero=el('section','card');
+  hero.appendChild(el('p','kicker','健康指数'));
+  hero.appendChild(el('p','index-num',String(r.index)));
+  hero.appendChild(el('p','index-max','原生家庭健康指数 · 0–100'));
+  const badge=el('div','badge-row');
+  badge.appendChild(el('span','lv',r.tierId));
+  badge.appendChild(el('span','lv mist',r.name));
+  hero.appendChild(badge);
+  hero.appendChild(el('p','lead','当前档位'));
+  const title=el('h2','type-title',r.name);
+  title.id='typeTitle';
+  hero.appendChild(title);
+  hero.appendChild(el('p','punch',r.punch));
+  hero.appendChild(el('p','note',r.note));
+  hero.appendChild(el('p','fine',INDEX_NOTE));
+  root.appendChild(hero);
+
+  const thin=el('section','card');
+  thin.appendChild(el('h2','st','最薄的一面'));
+  thin.appendChild(el('p','thin-name',r.dominantName));
+  thin.appendChild(el('p','punch',DIM_META[r.dominant].tip));
+  thin.appendChild(el('p','egg',r.thinLine));
+  const tags=el('div','tags');
+  tags.appendChild(el('span','tag mist','短板 · '+r.dominant));
+  (r.tags||[]).forEach(t=>tags.appendChild(el('span','tag',t)));
+  thin.appendChild(tags);
+  thin.appendChild(el('p','fine','主导短板取六维里最低的一面；并列时按 情感接住 → 边界呼吸 → 沟通通道 → 角色轻负 → 价值温度 → 安全底盘 优先。高分才表示这一侧更稳。'));
+  root.appendChild(thin);
+
+  const radar=el('section','card');
+  radar.id='radarCard';
+  radar.appendChild(el('h2','st','六维雷达'));
+  const box=el('div','radar-box');
+  box.innerHTML=radarSVG(r);
+  radar.appendChild(box);
+  const grid=el('div','score-grid');
+  DIM_IDS.forEach(id=>{
+    const row=el('div','bar');
+    const h=el('div','bar-h');
+    h.appendChild(document.createTextNode(DIM_META[id].name));
+    h.appendChild(el('b',null,String(r.scores[id])));
+    row.appendChild(h);
+    const track=el('div','bar-track');
+    const fill=el('div','bar-fill');
+    fill.style.width=r.scores[id]+'%';
+    track.appendChild(fill);
+    row.appendChild(track);
+    grid.appendChild(row);
+  });
+  radar.appendChild(grid);
+  radar.appendChild(el('p','fine','外圈是 100。分维越高，表示这一侧在你的回忆里更稳；低分是值得被看见的薄处，不是对谁的判决。'));
+  root.appendChild(radar);
+
+  const dimCard=el('section','card');
+  dimCard.appendChild(el('h2','st','分维解读'));
+  DIM_IDS.forEach(id=>{
+    const block=el('div','dim-read');
+    const head=el('div','dim-head');
+    const mark=id===r.dominant?' · 最薄':'';
+    head.appendChild(el('span','dn',DIM_META[id].name+mark));
+    head.appendChild(el('span','ds',String(r.scores[id])));
+    block.appendChild(head);
+    const band=r.scores[id]>=67?'这一侧更稳。':(r.scores[id]<=33?'这一侧偏薄。':'这一侧冷暖都有。');
+    block.appendChild(el('p',null,band+dimRead(id,r.scores[id])));
+    dimCard.appendChild(block);
+  });
+  root.appendChild(dimCard);
+
+  const feat=el('section','card');
+  feat.appendChild(el('h2','st','特征表现'));
+  const ul=el('ul','bullets');
+  r.traits.forEach(t=>{const li=el('li');li.textContent=t;ul.appendChild(li)});
+  feat.appendChild(ul);
+  root.appendChild(feat);
+
+  const adv=el('section','card');
+  adv.appendChild(el('h2','st','自处 / 边界小建议'));
+  const ul2=el('ul','bullets');
+  r.advice.forEach(t=>{const li=el('li');li.textContent=t;ul2.appendChild(li)});
+  adv.appendChild(ul2);
+  adv.appendChild(el('p','fine','都是今天就能试的小动作。做不到也没关系，先把自己留下来。'));
+  root.appendChild(adv);
+
+  const disc=el('p','disclaimer');
+  fillDisclaimer(disc);
+  root.appendChild(disc);
+
+  const safe=el('p','safety');
+  fillSafety(safe);
+  root.appendChild(safe);
+}
+function resultText(r){
+  return [
+    '【原生家庭健康度测试】',
+    r.name+' · 健康指数 '+r.index,
+    r.punch,
+    '最薄的一面：'+r.dominantName+'（'+r.thinLine+'）',
+    r.note,
+    '六维：'+DIM_IDS.map(id=>DIM_META[id].name+r.scores[id]).join(' / '),
+    '特征：'+r.traits.slice(0,3).join('；'),
+    '小建议：'+r.advice[0],
+    DISCLAIMER,
+    URL_
+  ].filter(Boolean).join('\n');
+}
+function copyText(){
+  if(!current) return;
+  const text=resultText(current);
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>toast('已复制结果文案')).catch(()=>fallbackCopy(text));
+  }else fallbackCopy(text);
+}
+function fallbackCopy(text){
+  const ta=document.createElement('textarea');
+  ta.value=text;document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');toast('已复制结果文案')}catch(e){toast('复制失败，请手动长按选择')}
+  document.body.removeChild(ta);
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+function wrapT(ctx,text,maxW){
+  const chars=String(text).split('');
+  const lines=[]; let line='';
+  for(const ch of chars){
+    const t=line+ch;
+    if(ctx.measureText(t).width>maxW && line){lines.push(line);line=ch}
+    else line=t;
+  }
+  if(line) lines.push(line);
+  return lines;
+}
+function drawRadarCanvas(ctx,cx,cy,R,scores){
+  const n=6;
+  const pt=(i,v)=>{
+    const a=-Math.PI/2+(i*2*Math.PI)/n;
+    const rr=Math.max(0,Math.min(100,v))/100*R;
+    return [cx+rr*Math.cos(a), cy+rr*Math.sin(a)];
+  };
+  [25,50,75,100].forEach(k=>{
+    ctx.beginPath();
+    for(let i=0;i<n;i++){
+      const p=pt(i,k);
+      if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+    }
+    ctx.closePath();
+    ctx.strokeStyle=k===100||k===50?'#D4C4B8':'#E5D9CE';
+    ctx.lineWidth=k===100?1.6:1;
+    ctx.stroke();
+  });
+  for(let i=0;i<n;i++){
+    const p=pt(i,100);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p[0],p[1]);
+    ctx.strokeStyle='#E5D9CE';ctx.lineWidth=1;ctx.stroke();
+  }
+  ctx.beginPath();
+  DIM_IDS.forEach((id,i)=>{
+    const p=pt(i,scores[id]);
+    if(i===0) ctx.moveTo(p[0],p[1]); else ctx.lineTo(p[0],p[1]);
+  });
+  ctx.closePath();
+  ctx.fillStyle='rgba(196,120,90,0.34)';
+  ctx.strokeStyle='#9A5A42';
+  ctx.lineWidth=2.4;
+  ctx.fill();ctx.stroke();
+  DIM_IDS.forEach((id,i)=>{
+    const p=pt(i,scores[id]);
+    ctx.beginPath();ctx.arc(p[0],p[1],4,0,Math.PI*2);
+    ctx.fillStyle='#F7F3EE';ctx.strokeStyle='#C4785A';ctx.lineWidth=2;ctx.fill();ctx.stroke();
+    const a=-Math.PI/2+(i*2*Math.PI)/n;
+    const lx=cx+(R+28)*Math.cos(a), ly=cy+(R+28)*Math.sin(a);
+    ctx.fillStyle='#2C2622';ctx.font='600 13px '+FONT;
+    ctx.textAlign=Math.abs(Math.cos(a))<0.35?'center':(Math.cos(a)>0?'left':'right');
+    ctx.fillText(DIM_META[id].name,lx,ly);
+  });
+}
+function buildShare(r){
+  const W=750, H=1280;
+  const cv=document.createElement('canvas');
+  cv.width=W;cv.height=H;
+  const x=cv.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'#FFFCFA');g.addColorStop(1,'#F3E8DC');
+  x.fillStyle=g;x.fillRect(0,0,W,H);
+  function T(t,tx,ty,s,col,wt){x.fillStyle=col;x.font=(wt||'600')+' '+s+'px '+FONT;x.fillText(t,tx,ty)}
+  roundRect(x,40,48,W-80,H-96,28);
+  x.fillStyle='#FFFCFA';x.fill();
+  x.strokeStyle='#E5D9CE';x.lineWidth=2;x.stroke();
+  T('原生家庭健康度测试',70,110,22,'#9A5A42','700');
+  x.font='700 34px '+FONT;
+  wrapT(x,r.name,W-160).slice(0,2).forEach((ln,i)=>T(ln,70,172+i*44,34,'#2C2622','700'));
+  T('健康指数 '+r.index,70,268,26,'#5C4E46','700');
+  x.font='500 24px '+FONT;
+  const punchLines=wrapT(x,r.punch,W-160);
+  x.fillStyle='#3F342E';
+  punchLines.slice(0,3).forEach((ln,i)=>x.fillText(ln,70,320+i*34));
+  drawRadarCanvas(x,W/2,560,120,r.scores);
+  let y=760;
+  x.font='600 22px '+FONT;x.fillStyle='#2C2622';x.fillText('最薄的一面 · '+r.dominantName,70,y);
+  y+=40;
+  x.font='600 22px '+FONT;x.fillText('特征表现',70,y);
+  y+=36;
+  x.font='400 20px '+FONT;x.fillStyle='#3F342E';
+  r.traits.slice(0,3).forEach(t=>{
+    wrapT(x,'· '+t,W-160).slice(0,2).forEach(ln=>{x.fillText(ln,70,y);y+=30});
+    y+=6;
+  });
+  y=Math.max(y+12,1120);
+  x.font='400 16px '+FONT;x.fillStyle='#8C827A';
+  x.fillText('娱乐向 · 非正式家庭评估 · 不是对父母的审判',70,y);
+  x.fillText(URL_,70,y+28);
+  return cv.toDataURL('image/png');
+}
+function showShare(){
+  if(!current) return;
+  try{
+    const url=buildShare(current);
+    window.__shareUrl=url;
+    $('shareImg').src=url;
+    $('ov').classList.add('show');
+    $('ov').setAttribute('aria-hidden','false');
+  }catch(e){
+    console.error(e);
+    toast('生成卡片失败，请截图保存');
+  }
+}
+function renderQ(){
+  const total=QS.length;
+  const q=QS[order[qi]];
+  $('qprog').textContent=(qi+1)+' / '+total;
+  $('fill').style.width=((qi)/total*100)+'%';
+  $('qno').textContent='第 '+(qi+1)+' 题 · '+DIM_META[q.dim].name;
+  $('qprompt').textContent=PROMPT_TEXT;
+  $('qtext').textContent=q.text;
+  const box=$('opts');
+  box.textContent='';
+  CHOICES.forEach(c=>{
+    const b=el('button','opt');
+    b.type='button';
+    const num=el('span','onum',String(c.v));
+    b.appendChild(num);
+    b.appendChild(document.createTextNode(c.t));
+    if(ans[qi]===c.v) b.classList.add('sel');
+    b.onclick=()=>pick(c.v);
+    box.appendChild(b);
+  });
+}
+function pick(v){
+  if(picking) return;
+  picking=true;
+  ans[qi]=v;
+  renderQ();
+  setTimeout(()=>{
+    if(qi<QS.length-1){qi++;picking=false;renderQ()}
+    else {picking=false;finish()}
+  },180);
+}
+function finish(){
+  show('loading');
+  setTimeout(()=>{
+    const scores=scoreFromAnswers(ans);
+    const report=analyze(scores);
+    try{
+      const saved=Object.assign({tierId:report.tierId,name:report.name,index:report.index,dominant:report.dominant,punch:report.punch,at:Date.now()}, scores);
+      localStorage.setItem(LAST_KEY, JSON.stringify(saved));
+    }catch(e){}
+    refreshLastBtn();
+    renderResult(report);
+    show('result');
+  },900);
+}
+function isUnlocked(){try{return sessionStorage.getItem(ACCESS_KEY)==='1'}catch(e){return false}}
+function setUnlocked(code){
+  try{
+    sessionStorage.setItem(ACCESS_KEY,'1');
+    if(code) sessionStorage.setItem(ACCESS_CODE_KEY,code);
+  }catch(e){}
+}
+function clearUnlock(){
+  try{
+    sessionStorage.removeItem(ACCESS_KEY);
+    sessionStorage.removeItem(ACCESS_CODE_KEY);
+  }catch(e){}
+}
+function normalizeCode(v){
+  return String(v||'')
+    .trim()
+    .replace(/[\uFF21-\uFF3A]/g, ch=>String.fromCharCode(ch.charCodeAt(0)-0xFF21+65))
+    .replace(/[\uFF10-\uFF19]/g, ch=>String.fromCharCode(ch.charCodeAt(0)-0xFF10+48))
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g,'');
+}
+function openCodeModal(prefill){
+  $('codeMask').classList.add('show');
+  $('codeMask').setAttribute('aria-hidden','false');
+  document.body.classList.add('lock');
+  const inp=$('codeInput');
+  if(prefill!=null) inp.value=prefill;
+  setTimeout(()=>inp.focus(),40);
+}
+function closeCodeModal(){
+  $('codeMask').classList.remove('show');
+  $('codeMask').setAttribute('aria-hidden','true');
+  document.body.classList.remove('lock');
+  refreshStartBtn();
+}
+function startQuiz(){
+  ans=[];qi=0;picking=false;
+  order=shuffle(QS.map((_,i)=>i));
+  closeCodeModal();
+  show('quiz');
+  renderQ();
+}
+function setCodeBusy(busy){
+  const btn=$('btnCodeOk');
+  btn.disabled=!!busy;
+  btn.textContent=busy?'验证中…':'开始答题';
+}
+function refreshLastBtn(){
+  let has=false;
+  try{has=!!localStorage.getItem(LAST_KEY)}catch(e){}
+  $('btnLast').hidden=!has;
+}
+function refreshStartBtn(){
+  const btn=$('btnStart');
+  if(!btn) return;
+  btn.textContent=isUnlocked()?'已解锁，直接进入':'开始测试';
+}
+function clampScore(n){
+  n=Number(n);
+  if(!Number.isFinite(n)) return null;
+  return Math.max(0, Math.min(100, Math.round(n)));
+}
+function showLast(){
+  let data=null;
+  try{data=JSON.parse(localStorage.getItem(LAST_KEY)||'null')}catch(e){data=null}
+  if(!data){toast('还没有上次结果');refreshLastBtn();return}
+  const scores={};
+  for(const id of DIM_IDS){
+    const v=clampScore(data[id]);
+    if(v==null){toast('还没有上次结果');refreshLastBtn();return}
+    scores[id]=v;
+  }
+  renderResult(analyze(scores));
+  show('result');
+  toast('已打开上次结果，本次不扣次');
+}
+async function apiFetch(url, opts){
+  const ctl=new AbortController();
+  const timer=setTimeout(()=>ctl.abort(),12000);
+  try{return await fetch(url, Object.assign({}, opts, {signal:ctl.signal}))}
+  finally{clearTimeout(timer)}
+}
+async function peekVault(code){
+  const r=await apiFetch(API_BASE+'/get?quiz='+encodeURIComponent(QUIZ_KEY)+'&code='+encodeURIComponent(code));
+  if(r.status===404) return null;
+  if(!r.ok) throw new Error('net '+r.status);
+  const data=await r.json();
+  if(!data||data.ok===false){
+    if(data&&(data.error==='not_found'||data.error==='invalid')) return null;
+    throw new Error((data&&data.error)||('net '+r.status));
+  }
+  return data;
+}
+async function redeemVault(code){
+  const r=await apiFetch(API_BASE+'/redeem',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({quiz:QUIZ_KEY,code})
+  });
+  let data=null;
+  try{data=await r.json()}catch(e){
+    if(r.status===404) return {ok:false,reason:'invalid'};
+    throw new Error('net '+r.status);
+  }
+  if(!data||!data.ok){
+    if(data&&data.error==='exhausted') return {ok:false,reason:'exhausted'};
+    if(r.status===404||(data&&(data.error==='not_found'||data.error==='invalid'))) return {ok:false,reason:'invalid'};
+    return {ok:false,reason:(data&&data.error)||('net '+r.status)};
+  }
+  return {ok:true,remaining:data.remaining,max:data.max||3};
+}
+async function tryUnlock(fromUrl){
+  if(codeBusy) return false;
+  const code=normalizeCode($('codeInput').value);
+  $('codeInput').value=code;
+  if(!code){if(!fromUrl) toast('请输入验证码');return false}
+  if(!CODE_RE.test(code)){if(!fromUrl) toast('验证码不正确');return false}
+  codeBusy=true;
+  setCodeBusy(true);
+  try{
+    const out=await redeemVault(code);
+    if(out.ok){
+      setUnlocked(code);
+      const left=out.remaining;
+      toast(left>0?('验证成功，还可以测 '+left+' 次'):'验证成功，这是本码最后一次');
+      startQuiz();
+      return true;
+    }
+    if(!fromUrl) toast(out.reason==='exhausted'?'此验证码已用完（每个码限 3 次）':'验证码不正确');
+    return false;
+  }catch(e){
+    console.error(e);
+    if(!fromUrl) toast('网络异常，请稍后重试');
+    return false;
+  }finally{
+    codeBusy=false;
+    setCodeBusy(false);
+  }
+}
+
+$('btnStart').onclick=()=>{if(isUnlocked()){startQuiz();return} openCodeModal(null)};
+$('btnLast').onclick=()=>showLast();
+$('btnViewLast').onclick=()=>showLast();
+$('btnCodeOk').onclick=()=>tryUnlock(false);
+$('codeInput').addEventListener('keydown',e=>{if(e.key==='Enter') tryUnlock(false)});
+$('codeInput').addEventListener('input',()=>{
+  const input=$('codeInput');
+  const v=input.value.toUpperCase();
+  if(v!==input.value){const p=input.selectionStart;input.value=v;try{input.setSelectionRange(p,p)}catch(e){}}
+});
+$('codeClose').onclick=closeCodeModal;
+$('codeMask').addEventListener('click',e=>{if(e.target===$('codeMask')) closeCodeModal()});
+$('qback').onclick=()=>{
+  if(picking) return;
+  if(qi>0){qi--;renderQ()}
+  else show('start');
+};
+$('btnRetry').onclick=()=>{
+  let pre='';
+  try{pre=sessionStorage.getItem(ACCESS_CODE_KEY)||''}catch(e){}
+  clearUnlock();
+  openCodeModal(pre);
+};
+$('btnCopy').onclick=copyText;
+$('btnImg').onclick=showShare;
+$('btnClose').onclick=()=>{$('ov').classList.remove('show');$('ov').setAttribute('aria-hidden','true')};
+$('btnDl').onclick=()=>{
+  if(!window.__shareUrl) return;
+  const a=document.createElement('a');
+  a.href=window.__shareUrl;a.download='family-of-origin.png';
+  document.body.appendChild(a);a.click();a.remove();
+};
+
+fillDisclaimer($('startDisclaimer'));
+refreshLastBtn();
+refreshStartBtn();
+(function bootFromUrl(){
+  try{
+    const u=new URL(location.href);
+    const c=normalizeCode(u.searchParams.get('code')||'');
+    if(c&&CODE_RE.test(c)){
+      $('codeInput').value=c;
+      if(!isUnlocked()) openCodeModal(c);
+    }
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

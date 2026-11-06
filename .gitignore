@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+node_modules/
+.idea/
+.vscode/
+shots/
+*.local
+sellable*.txt
+codes.txt
+codes-private.txt
+pools/

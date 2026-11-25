@@ -13,9 +13,12 @@ https://zengpenghui420-glitch.github.io/family-of-origin/
 | 题目 | 18 题 · 五级自评（完全不像我 → 非常像我） |
 | 维度 | 情感接住 / 边界呼吸 / 沟通通道 / 角色轻负 / 价值温度 / 安全底盘 |
 | 结果 | 健康指数 0–100 + 档位 + 最薄的一面 + 六维雷达 + 特征表现 + 自处/边界小建议 |
-| 验证码 | `FO****`，每码 3 次；vault quiz key `family`；**不接 Mantle** |
-| 重新测试 | 清会话解锁 → 再弹码 → redeem（扣次） |
-| 查看上次 | 仅读本机 `family_last_result`，不扣次 |
+| 订单号 | 页面只填写小红书订单号（「我的订单」里复制）。每单最多 3 次 |
+| 新一次 | `POST /order/redeem`，body `{ "quiz": "family", "orderId" }`，扣 1 次 |
+| 同一次 | 中途刷新、继续答题、结果页刷新只 `GET /order/get?quiz=family&orderId=`，不扣次 |
+| 再测 | 再扣 1 次。第 4 次拒绝，当次结果留在页面上 |
+| 旧验证码 | 页面不宣传。已发出的码仍走本页原来的 `https://snappy-tundra-7uesdvk.tmp.now`：`POST /redeem`、`GET /get`（`quiz=family`） |
+| 查看上次 | 仅读本机 `family_last_result`，不请求接口 |
 
 ## 免责声明
 
@@ -36,7 +39,7 @@ https://zengpenghui420-glitch.github.io/family-of-origin/
 python3 -m http.server 8080
 ```
 
-浏览器打开 http://127.0.0.1:8080/ 。未解锁时点「开始测试」会要求验证码；「查看上次结果」只读本地缓存。
+浏览器打开 http://127.0.0.1:8080/ 。未解锁时点「开始测试」会要求订单号；「查看上次结果」只读本地缓存。
 
 ## GitHub Pages
 

@@ -13,11 +13,13 @@ https://zengpenghui420-glitch.github.io/family-of-origin/
 | 题目 | 18 题 · 五级自评（完全不像我 → 非常像我） |
 | 维度 | 情感接住 / 边界呼吸 / 沟通通道 / 角色轻负 / 价值温度 / 安全底盘 |
 | 结果 | 健康指数 0–100 + 档位 + 最薄的一面 + 六维雷达 + 特征表现 + 自处/边界小建议 |
-| 订单号 | 页面只填写小红书订单号（「我的订单」里复制）。每单最多 3 次 |
-| 新一次 | `POST /order/redeem`，body `{ "quiz": "family", "orderId" }`，扣 1 次 |
-| 同一次 | 中途刷新、继续答题、结果页刷新只 `GET /order/get?quiz=family&orderId=`，不扣次 |
-| 再测 | 再扣 1 次。第 4 次拒绝，当次结果留在页面上 |
-| 旧验证码 | 页面不宣传。已发出的码仍走本页原来的 `https://snappy-tundra-7uesdvk.tmp.now`：`POST /redeem`、`GET /get`（`quiz=family`） |
+| 订单号 | 页面填写小红书订单号（「我的订单」里复制）。只接受 `P` + 18 位；重复块、逐位 ±1、19 位都提示「订单号格式不对」，不开始 |
+| 通过 | 格式通过立刻开始。不请求 `*.vercel.app`，也不读写 Mantle `orders/`。没有服务器绑定、限流或剩余次数，也不证明已经付款 |
+| 显示 | 第一次开始提示「验证成功，还可以测 2 次」。重新测试改为「还可以测 1 次」，再一次是「这是最后一次」 |
+| 不改显示 | 刷新、继续这一次、结果页恢复、查看上次结果都不改这个提示 |
+| 记满之后 | 同一订单号仍可进入，提示「验证成功」，不拦截 |
+| 存放 | 显示次数按订单号记在这台浏览器的 `localStorage`（键 `family_order_uses`） |
+| 旧验证码 | 页面不宣传。已发出的码仍走 `https://snappy-tundra-7uesdvk.tmp.now`：`POST /redeem` 扣剩余次数，`GET /get` 只读（`quiz=family`）。本测验没有 Mantle 码集合 |
 | 查看上次 | 仅读本机 `family_last_result`，不请求接口 |
 
 ## 免责声明

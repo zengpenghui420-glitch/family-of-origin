@@ -248,19 +248,18 @@ h1{font-size:26px;line-height:1.35;font-weight:700;letter-spacing:.5px;margin-bo
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <noscript><p style="padding:24px;text-align:center">请开启 JavaScript 后使用本测验。</p></noscript>
 <script>
-const API_BASE='https://snappy-tundra-7uesdvk-zengpenghui420-glitch.vercel.app';
 const LEGACY_API='https://snappy-tundra-7uesdvk.tmp.now';
 const QUIZ_KEY='family';
+const ORDER_MAX=3;
+const ORDER_USES_KEY='family_order_uses';
 const ACCESS_KEY='family_unlocked';
 const ACCESS_CODE_KEY='family_code';
 const KIND_KEY='family_kind';
 const PHASE_KEY='family_phase';
 const PROGRESS_KEY='family_progress';
 const RESULT_KEY='family_session_result';
-const DEVICE_KEY='family_device';
 const LAST_KEY='family_last_result';
 const CODE_RE=/^FO[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{4}$/i;
-const ORDER_TIMEOUT_MS=12000;
 const URL_='https://zengpenghui420-glitch.github.io/family-of-origin/';
 const DISCLAIMER='本测试为娱乐向自我观察，非正式心理测量或家庭评估，不能替代专业心理咨询、心理治疗或临床诊断。「原生家庭健康指数」只是对你童年/成长期家庭互动氛围的趣味画像，不是对父母的审判，也不等于你现在过得好不好；结果会受回忆偏差与当下情绪影响。若题目勾起强烈不适，请随时停下，优先照顾自己。';
 const SAFETY_NOTE='看见来处是为了更温和地走向自己，不是为了给谁定罪。家庭没有标准答案。若相关体验已明显影响睡眠、工作或关系，寻求现实支持（可信赖的人、正规心理咨询/医院心理科）是勇敢的选择，而不是软弱。';
@@ -833,10 +832,6 @@ function finish(){
     show('result');
   },900);
 }
-/* Order ids use API_BASE /order/redeem and /order/get (quiz is always family).
-   Already-issued codes stay on this page's own vault host, LEGACY_API:
-   POST /redeem and GET /get. That host is not the order deployment.
-   paidVerified is never shown. This is not a payment check. */
 function isUnlocked(){try{return sessionStorage.getItem(ACCESS_KEY)==='1'}catch(e){return false}}
 function sessionKind(){try{return sessionStorage.getItem(KIND_KEY)||''}catch(e){return ''}}
 function sessionPhase(){try{return sessionStorage.getItem(PHASE_KEY)||''}catch(e){return ''}}
@@ -1039,6 +1034,14 @@ async function redeemVault(code){
   }
   return {ok:true,remaining:data.remaining,max:data.max||3};
 }
+/* ORDER_UNLOCK_START
+   A format-valid P+18 id starts immediately. This path makes no request.
+   The "还可以测 N 次" line is remembered on this device and changes only
+   when a new attempt starts (first entry or 重新测试). Refresh, continue,
+   and 查看上次结果 leave it as it is. A format-valid id still starts after
+   the displayed count passes 3.
+   Already-issued FO codes stay on the vault path above: POST /redeem and
+   GET /get on LEGACY_API. paidVerified is never shown. */
 function normalizeOrderId(raw){
   let s=String(raw??'');
   if(s.length>400) s=s.slice(0,400);
@@ -1081,196 +1084,68 @@ function classifyInput(raw){
   if(/^P\d{10,}$/.test(code)) return {type:'order-invalid'};
   return {type:'invalid'};
 }
-function usesOf(res){
-  if(!res) return null;
-  if(res.ok&&typeof res.uses==='number') return res.uses;
-  if(res.error==='not_found') return 0;
-  return null;
-}
-function decideTimeout(beforeUses,after){
-  if(!after) return 'giveup';
-  if(!after.ok&&after.error&&after.error!=='not_found') return 'return';
-  const afterUses=usesOf(after);
-  if(after.ok&&beforeUses!=null&&afterUses!=null&&afterUses>beforeUses) return 'accept';
-  if(after.ok&&beforeUses==null) return 'accept';
-  if(afterUses===0||(beforeUses!=null&&afterUses!=null&&afterUses===beforeUses)) return 'retry';
-  return 'giveup';
-}
 function orderFailText(res){
   const e=res&&(res.error||res.reason);
   if(e==='invalid') return '订单号格式不对，请到小红书「我的订单」里复制';
-  if(e==='bound_other_quiz') return '这个订单号已经用来测过别的测试了';
-  if(e==='exhausted') return '这个订单号的 3 次已经用完了';
-  if(e==='rate_limited') return '试的次数有点多，请稍后再试';
-  return '暂时验证不了，请稍后再试';
+  return '订单号格式不对，请到小红书「我的订单」里复制';
 }
 function orderSuccessText(res){
-  return res&&res.remaining>0?('验证成功，还可以测 '+res.remaining+' 次'):'验证成功，这是最后一次';
+  if(!res||typeof res.uses!=='number'||res.uses>ORDER_MAX) return '验证成功';
+  return res.remaining>0?'验证成功，还可以测 '+res.remaining+' 次':'验证成功，这是最后一次';
 }
-function orderTimeoutMs(){
-  try{if(globalThis.__ORDER_TIMEOUT_MS) return globalThis.__ORDER_TIMEOUT_MS}catch(e){}
-  return ORDER_TIMEOUT_MS;
-}
-function reconcileWaitMs(){
-  try{if(globalThis.__ORDER_RECONCILE_MS!=null) return globalThis.__ORDER_RECONCILE_MS}catch(e){}
-  return 1200;
-}
-function deviceId(){
+function readOrderUseMap(){
   try{
-    let id=localStorage.getItem(DEVICE_KEY);
-    if(id&&/^[A-Za-z0-9._:-]{8,128}$/.test(id)) return id;
-    const buf=new Uint8Array(16);
-    if(typeof crypto!=='undefined'&&crypto.getRandomValues) crypto.getRandomValues(buf);
-    else for(let i=0;i<buf.length;i++) buf[i]=Math.floor(Math.random()*256);
-    id=Array.from(buf,b=>b.toString(16).padStart(2,'0')).join('');
-    localStorage.setItem(DEVICE_KEY,id);
-    return id;
-  }catch(e){return ''}
+    const raw=JSON.parse(localStorage.getItem(ORDER_USES_KEY)||'{}');
+    return raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
+  }catch(e){return {}}
 }
-function orderHeaders(json){
-  const h={};
-  if(json) h['Content-Type']='application/json';
-  const id=deviceId();
-  if(id) h['X-Device-Id']=id;
-  return h;
+function shownOrderUses(orderId){
+  const n=Number(readOrderUseMap()[orderId]);
+  return Number.isFinite(n)&&n>0?Math.floor(n):0;
 }
-async function orderFetch(url,opts){
-  const ctrl=new AbortController();
-  const timer=setTimeout(()=>ctrl.abort(),orderTimeoutMs());
-  try{
-    let r;
-    try{r=await fetch(url,Object.assign({},opts,{signal:ctrl.signal,cache:'no-store'}))}
-    catch(e){
-      const err=new Error('timeout');err.timeout=true;throw err;
-    }
-    const text=await r.text();
-    let data=null;
-    try{data=text?JSON.parse(text):null}catch(e){data=null}
-    if(!data||typeof data!=='object'||Array.isArray(data)){
-      const err=new Error('http '+r.status);
-      err.status=r.status;
-      if(r.status===500||r.status===502||r.status===503||r.status===504) err.timeout=true;
-      else err.unavailable=true;
-      throw err;
-    }
-    data.status=r.status;
-    if(r.status===404&&data.error==='not_found') return {ok:false,error:'not_found',status:404};
-    if(r.status===500||r.status===502||r.status===503||r.status===504){
-      const err=new Error('timeout');err.timeout=true;err.status=r.status;throw err;
-    }
-    return data;
-  }finally{clearTimeout(timer)}
+function noteDisplayedUse(orderId){
+  const uses=shownOrderUses(orderId)+1;
+  const all=readOrderUseMap();
+  all[orderId]=uses;
+  try{localStorage.setItem(ORDER_USES_KEY, JSON.stringify(all))}catch(e){}
+  return {ok:true,uses:uses,remaining:Math.max(0,ORDER_MAX-uses),max:ORDER_MAX,paidVerified:false};
 }
-function orderGetUrl(orderId){
-  return API_BASE+'/order/get?quiz='+encodeURIComponent(QUIZ_KEY)+'&orderId='+encodeURIComponent(orderId);
-}
-async function peekOrder(orderId){
-  return orderFetch(orderGetUrl(orderId),{method:'GET',headers:orderHeaders(false)});
-}
-async function postRedeem(orderId){
-  return orderFetch(API_BASE+'/order/redeem',{
-    method:'POST',
-    headers:orderHeaders(true),
-    body:JSON.stringify({quiz:QUIZ_KEY,orderId})
-  });
-}
-function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-async function reconcileTimeout(orderId,beforeUses){
-  let after=null;
-  try{after=await peekOrder(orderId)}catch(e){after=null}
-  let action=decideTimeout(beforeUses,after);
-  if(action==='retry'||action==='giveup'){
-    await sleep(reconcileWaitMs());
-    try{after=await peekOrder(orderId)}catch(e){}
-    const again=decideTimeout(beforeUses,after);
-    if(again==='accept'||again==='return'||again==='retry') action=again;
-  }
-  return {action,after};
-}
-async function redeemOrder(orderId){
+function redeemOrder(orderId){
   const bad=orderFormatError(orderId);
   if(bad) return {ok:false,error:bad};
-  let beforeUses=null;
-  try{
-    const before=await peekOrder(orderId);
-    if(before&&before.ok&&(before.remaining<=0||(typeof before.max==='number'&&typeof before.uses==='number'&&before.uses>=before.max))){
-      return {ok:false,error:'exhausted',remaining:0,max:before.max||3};
-    }
-    if(before&&!before.ok&&before.error&&before.error!=='not_found') return before;
-    beforeUses=usesOf(before);
-  }catch(e){
-    if(!(e&&(e.unavailable||e.timeout))) throw e;
-  }
-  async function once(){
-    try{return {kind:'res',res:await postRedeem(orderId)}}
-    catch(e){if(e&&e.timeout) return {kind:'timeout'};throw e}
-  }
-  let outcome=await once();
-  if(outcome.kind==='res') return outcome.res;
-  let rec=await reconcileTimeout(orderId,beforeUses);
-  if(rec.action==='accept'||rec.action==='return') return rec.after;
-  if(rec.action!=='retry'){const err=new Error('timeout');err.timeout=true;throw err}
-  outcome=await once();
-  if(outcome.kind==='res') return outcome.res;
-  rec=await reconcileTimeout(orderId,beforeUses);
-  if(rec.action==='accept'||rec.action==='return') return rec.after;
-  const err=new Error('timeout');err.timeout=true;throw err;
+  return noteDisplayedUse(orderId);
 }
-async function restoreOrderSession(fromClick){
+/* ORDER_UNLOCK_END */
+function restoreOrderSession(fromClick){
   if(sessionKind()!=='order') return false;
   const orderId=sessionCode();
   const phase=sessionPhase();
-  if(!orderId||(phase!=='running'&&phase!=='result')){
+  if(!orderId||orderFormatError(orderId)||(phase!=='running'&&phase!=='result')){
     if(fromClick) openCodeModal(null);
     return false;
   }
-  if(unlockBusy) return false;
-  unlockBusy=true;
-  const startBtn=$('btnStart');
-  if(startBtn) startBtn.disabled=true;
-  if(!fromClick){
-    setLoadingCopy('正在打开…','正在核对订单号');
-    show('loading');
-  }
-  try{
-    const peek=await peekOrder(orderId);
-    if(!peek.ok){
-      if(peek.error==='not_found') clearUnlock();
-      else toast(orderFailText(peek));
+  if(phase==='result'){
+    const scores=readSessionResult();
+    if(!scores){
       show('start');
+      if(fromClick) toast('暂时打不开这次结果，请稍后再试');
       return false;
     }
-    if(phase==='result'){
-      const scores=readSessionResult();
-      if(!scores){
-        show('start');
-        toast('暂时打不开这次结果，请稍后再试');
-        return false;
-      }
-      renderResult(analyze(scores));
-      show('result');
-      return true;
-    }
-    const progress=readProgress();
-    if(progress){
-      resumeQuiz(progress);
-      return true;
-    }
-    if(fromClick){
-      startQuiz();
-      return true;
-    }
-    show('start');
+    renderResult(analyze(scores));
+    show('result');
     return true;
-  }catch(e){
-    console.error(e);
-    show('start');
-    toast('暂时验证不了，请稍后再试');
-    return false;
-  }finally{
-    unlockBusy=false;
-    if(startBtn) startBtn.disabled=false;
   }
+  const progress=readProgress();
+  if(progress){
+    resumeQuiz(progress);
+    return true;
+  }
+  if(fromClick){
+    startQuiz();
+    return true;
+  }
+  show('start');
+  return true;
 }
 async function tryUnlock(fromUrl){
   const cls=classifyInput($('codeInput').value);
@@ -1286,7 +1161,7 @@ async function tryUnlock(fromUrl){
   setCodeBusy(true);
   try{
     if(cls.type==='order'){
-      const res=await redeemOrder(cls.orderId);
+      const res=redeemOrder(cls.orderId);
       if(res&&res.ok){
         setUnlockedOrder(cls.orderId);
         toast(orderSuccessText(res));
@@ -1308,7 +1183,7 @@ async function tryUnlock(fromUrl){
     return false;
   }catch(e){
     console.error(e);
-    if(!fromUrl) toast(cls.type==='order'?'暂时验证不了，请稍后再试':'网络异常，请稍后重试');
+    if(cls.type!=='order'&&!fromUrl) toast('网络异常，请稍后重试');
     return false;
   }finally{
     unlockBusy=false;
@@ -1332,7 +1207,7 @@ async function retryOrder(){
   const prev=btn.textContent;
   btn.textContent='核对中…';
   try{
-    const res=await redeemOrder(orderId);
+    const res=redeemOrder(orderId);
     if(!res||!res.ok){
       toast(orderFailText(res));
       return;
@@ -1340,9 +1215,6 @@ async function retryOrder(){
     setUnlockedOrder(orderId);
     toast(orderSuccessText(res));
     startQuiz();
-  }catch(e){
-    console.error(e);
-    toast('暂时验证不了，请稍后再试');
   }finally{
     btn.disabled=false;
     btn.textContent=prev;
@@ -1400,11 +1272,11 @@ $('btnDl').onclick=()=>{
 fillDisclaimer($('startDisclaimer'));
 refreshLastBtn();
 refreshStartBtn();
-(async function boot(){
+(function boot(){
   let restored=false;
   try{
     if(sessionKind()==='order'&&(sessionPhase()==='running'||sessionPhase()==='result')){
-      restored=await restoreOrderSession(false);
+      restored=restoreOrderSession(false);
     }
   }catch(e){console.error(e)}
   if(restored) return;
